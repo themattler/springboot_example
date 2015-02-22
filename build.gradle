@@ -1,0 +1,51 @@
+buildscript {
+	ext {
+		springBootVersion = '1.2.1.RELEASE'
+	}
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'springboot_example'
+    version =  '0.1'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+    maven { url "http://maven.springframework.org/milestone" }
+    maven { url "http://repo.opensourceagility.com/snapshots" }
+}
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+		exclude module: "spring-boot-starter-tomcat"
+	}
+    compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.data:spring-data-commons:1.9.2.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-test")
+	compile("com.squareup.retrofit:retrofit:1.6.0")    
+    compile("com.google.guava:guava:17.0")
+
+    testCompile("junit:junit")
+}
+
+
+sourceCompatibility = 1.7
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
